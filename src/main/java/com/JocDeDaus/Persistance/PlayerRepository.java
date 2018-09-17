@@ -16,7 +16,7 @@ public class PlayerRepository {
     public void savePlayer(Player player) throws Exception {
         if (player == null)
             throw new Exception();
-        if (playerExistByName(player.getName()))
+        if (playerExistByName(player.getName()) && !player.getName().equalsIgnoreCase("Anonimo"))
             throw new Exception();
 
         players.add(player);
@@ -34,7 +34,9 @@ public class PlayerRepository {
         return null;
     }
 
-    public boolean playerExistByName(String name){
+    public boolean playerExistByName(String name) throws Exception {
+        if (name == null)
+            throw new Exception();
         for (Player player : players) {
             if (player.getName().equals(name))
                 return true;
@@ -42,11 +44,17 @@ public class PlayerRepository {
         return false;
     }
 
-    public boolean playerExistById(int id){
+    public boolean playerExistById(int id) throws Exception {
+        if (id <= 0)
+            throw new Exception();
         for (Player player : players) {
             if (player.getId() == id)
                 return true;
         }
         return false;
+    }
+
+    public void deletePlayerById(int id) throws Exception {
+        players.remove(getPlayerById(id));
     }
 }

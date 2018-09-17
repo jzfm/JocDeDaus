@@ -20,12 +20,28 @@ public class GameRepository {
         games.add(game);
     }
 
-    public List<Game> getAllGamesByPlayerId(int playerId){
+    public List<Game> getAllGamesByPlayerId(int playerId) throws Exception {
+        if (playerId <= 0)
+            throw new Exception();
         List<Game> gameList = new ArrayList<>();
         for (Game game : games) {
             if (game.getPlayer().getId() == playerId)
                 gameList.add(game);
         }
         return gameList;
+    }
+
+    public double getPlayerWinRate(int playerId) throws Exception {
+        double totalWins = 0;
+        List<Game> playerGames = getAllGamesByPlayerId(playerId);
+        for (Game game : playerGames) {
+            if (game.isWin())
+                ++totalWins;
+        }
+        if (playerGames.size() != 0) {
+            return ((totalWins * 100) / playerGames.size());
+        }else{
+            return  0.00;
+        }
     }
 }

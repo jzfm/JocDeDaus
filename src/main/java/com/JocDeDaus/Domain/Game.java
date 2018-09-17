@@ -1,30 +1,42 @@
 package com.JocDeDaus.Domain;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Game {
 
     private int id;
-    private Dice dice1, dice2;
+    private List<Dice> diceList = new ArrayList<>();
+    private List<Integer> diceResults= new ArrayList<>();
     private boolean win;
     private Player player;
     private static int COUNTER=1;
 
     public Game(){}
 
-    public Game(Player player) throws Exception {
-        if (player == null)
+    public Game(Player player, int diceNumber) throws Exception {
+        if (player == null || diceNumber <= 0)
             throw new Exception();
 
-        dice1= new Dice();
-        dice2 = new Dice();
+        for(int i=0; i < diceNumber; ++i){
+            diceList.add(new Dice());
+        }
+        for (Dice dice : diceList) {
+            diceResults.add(dice.getResult());
+        }
         this.player = player;
         this.id = COUNTER;
-
-        if (dice1.getResult() + dice2.getResult() == 7){
-            win = true;
-        }else{
-            win = false;
-        }
+        this.win = gameResult();
         ++COUNTER;
+    }
+
+    private boolean gameResult(){
+        for (int i = 0; i < diceResults.size()-1; ++i){
+            if (diceResults.get(i) != 5 && diceResults.get(i) != 6 || !diceResults.get(i).equals(diceResults.get(i+1))){
+                return false;
+            }
+        }
+        return true;
     }
 
     public int getId() {
@@ -33,22 +45,6 @@ public class Game {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public Dice getDice1() {
-        return dice1;
-    }
-
-    public void setDice1(Dice dice1) {
-        this.dice1 = dice1;
-    }
-
-    public Dice getDice2() {
-        return dice2;
-    }
-
-    public void setDice2(Dice dice2) {
-        this.dice2 = dice2;
     }
 
     public boolean isWin() {
@@ -65,5 +61,21 @@ public class Game {
 
     public void setPlayer(Player player) {
         this.player = player;
+    }
+
+    public List<Dice> getDiceList() {
+        return diceList;
+    }
+
+    public void setDiceList(List<Dice> diceList) {
+        this.diceList = diceList;
+    }
+
+    public List<Integer> getDiceResults() {
+        return diceResults;
+    }
+
+    public void setDiceResults(List<Integer> diceResults) {
+        this.diceResults = diceResults;
     }
 }

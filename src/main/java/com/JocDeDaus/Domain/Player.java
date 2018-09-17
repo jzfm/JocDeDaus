@@ -16,11 +16,15 @@ public class Player {
     public Player(){}
 
     public Player(PlayerDTO player) throws Exception {
-        if (player == null || player.getName() == null || player.getName().equals(""))
+        if (player == null || player.getName() == null)
             throw new Exception();
+        if (player.getName().equals("") || player.getName().equalsIgnoreCase("Anonimo")) {
+            this.name = "Anonimo";
+        }else{
+            this.name = player.getName();
+        }
 
         this.id = COUNTER;
-        this.name = player.getName();
         this.games = new ArrayList<>();
         this.winRate = 0.00;
         ++COUNTER;
@@ -48,17 +52,7 @@ public class Player {
 
     public double getWinrate() { return winRate; }
 
-    public void setWinRate() {
-        List<Game> totalGames = getGames();
-        double totalWins = 0;
-        for (Game game : totalGames) {
-            if (game.isWin())
-                ++totalWins;
-        }
-        if (totalGames.size() != 0) {
-            winRate = ((totalWins * 100) / totalGames.size());
-        }else{
-            winRate = 0.00;
-        }
+    public void setWinRate(double winRate) {
+        this.winRate = winRate;
     }
 }

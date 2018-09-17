@@ -5,10 +5,7 @@ import com.JocDeDaus.Application.PlayerController;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -34,6 +31,49 @@ public class PlayerRestController {
         List<PlayerDTO> players = controller.getAllPlayers();
 
         return toJson(players);
+    }
+
+    @GetMapping(value = "/players/ranking", produces = "application/json;charset=UTF-8")
+    public String playerRanking() throws Exception {
+
+        double ranking = controller.getRanking();
+
+        return toJson(ranking);
+
+    }
+
+    @GetMapping(value = "/players/ranking/winner", produces = "application/json;charset=UTF-8")
+    public String playerRankingWinner() throws Exception {
+
+        PlayerDTO winner = controller.getRankingWinner();
+
+        return toJson(winner);
+
+    }
+
+    @GetMapping(value = "/players/ranking/loser", produces = "application/json;charset=UTF-8")
+    public String playerRankingLoser() throws Exception {
+
+        PlayerDTO loser = controller.getRankingLoser();
+
+        return toJson(loser);
+
+    }
+
+    @PutMapping(value = "/players/{playerId}", produces = "application/json;charset=UTF-8")
+    public String editPlayerName(@RequestBody String jPlayerToEdit, @PathVariable int playerId) throws Exception {
+
+        PlayerDTO editedPlayer = new Gson().fromJson(jPlayerToEdit, PlayerDTO.class);
+
+        PlayerDTO playerToEdit = controller.editPlayer(playerId, editedPlayer);
+
+        return toJson(playerToEdit);
+
+    }
+
+    @DeleteMapping(value = "/players/{playerId}", produces = "application/json;charset=UTF-8")
+    public void deletePLayer(@PathVariable int playerId) throws Exception {
+        controller.deletePlayer(playerId);
     }
 
     private String toJson(Object object){

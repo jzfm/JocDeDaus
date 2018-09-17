@@ -20,19 +20,27 @@ public class GameController {
     @Autowired
     PlayerRepository playerRepository;
 
-    public GameDTO createGame(int playerId) throws Exception {
+    public GameDTO createGame(int playerId, int diceNumber) throws Exception {
         Player player = playerRepository.getPlayerById(playerId);
-        Game game = new Game(player);
+        Game game = new Game(player, diceNumber);
         gameRepository.saveGame(game);
+        player.setWinRate(gameRepository.getPlayerWinRate(player.getId()));
+        player.getGames().add(game);
         return new GameDTO(game);
     }
 
     public List<GameDTO> getAllGamesByPlayerId(int playerId) throws Exception {
         List<GameDTO> gameDTOList = new ArrayList<>();
-        for (Game game : gameRepository.getAllGamesByPlayerId(playerId)) {
+        Player player = playerRepository.getPlayerById(playerId);
+        for (Game game : player.getGames()) {
             GameDTO gameDTO = new GameDTO(game);
             gameDTOList.add(gameDTO);
         }
         return gameDTOList;
+    }
+
+    public void deleteAllGamesByPlayerId(int playerId) throws Exception {
+        Player player = playerRepository.getPlayerById(playerId);
+        player.getGames().clear();
     }
 }

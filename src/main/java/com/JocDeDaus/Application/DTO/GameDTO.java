@@ -5,18 +5,23 @@ import com.JocDeDaus.Domain.Game;
 import com.JocDeDaus.Domain.Player;
 import com.google.gson.annotations.Expose;
 
+import java.util.List;
+
 public class GameDTO {
 
     @Expose
     private int id;
-    private Dice dice1, dice2;
+    private List<Dice> diceList;
     @Expose
     private boolean win;
     private Player player;
-    @Expose
-    private int results;
+    private List<Integer> diceResults;
     @Expose
     private String playerName;
+    @Expose
+    private String diceResultsExpose;
+    @Expose
+    private double winRate;
 
 
     public GameDTO(){}
@@ -26,24 +31,17 @@ public class GameDTO {
             throw new Exception();
 
         this.id = game.getId();
-        this.dice1 = game.getDice1();
-        this.dice2 = game.getDice2();
+        this.diceList = game.getDiceList();
         this.win = game.isWin();
         this.player = game.getPlayer();
-        this.results = game.getDice1().getResult() + game.getDice2().getResult();
+        this.diceResults = game.getDiceResults();
         this.playerName = game.getPlayer().getName();
+        this.diceResultsExpose = game.getDiceResults().toString();
+        this.winRate = player.getWinrate();
     }
 
     public int getId() {
         return id;
-    }
-
-    public Dice getDice1() {
-        return dice1;
-    }
-
-    public Dice getDice2() {
-        return dice2;
     }
 
     public boolean isWin() {
@@ -53,8 +51,6 @@ public class GameDTO {
     public Player getPlayer() {
         return player;
     }
-
-    public int getResults() { return results; }
 
     public String getPlayerName() { return playerName; }
 }
