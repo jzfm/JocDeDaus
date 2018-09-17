@@ -10,13 +10,15 @@ import java.util.List;
 public class PlayerRepository {
 
     private static List<Player> players = new ArrayList<>();
+    private static final String ANONYMOUS="Anonimo";
 
     public PlayerRepository(){}
+
 
     public void savePlayer(Player player) throws Exception {
         if (player == null)
             throw new Exception();
-        if (playerExistByName(player.getName()) && !player.getName().equalsIgnoreCase("Anonimo"))
+        if (playerExistByName(player.getName()) && !player.getName().equalsIgnoreCase(ANONYMOUS))
             throw new Exception();
 
         players.add(player);

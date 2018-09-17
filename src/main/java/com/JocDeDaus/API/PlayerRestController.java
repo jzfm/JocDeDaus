@@ -25,16 +25,18 @@ public class PlayerRestController {
         return toJson(player);
     }
 
+
     @GetMapping(value = "/players", produces = "application/json;charset=UTF-8")
-    public String playerList() throws Exception {
+    public String getPlayerList() throws Exception {
 
         List<PlayerDTO> players = controller.getAllPlayers();
 
         return toJson(players);
     }
 
+
     @GetMapping(value = "/players/ranking", produces = "application/json;charset=UTF-8")
-    public String playerRanking() throws Exception {
+    public String getPlayerRanking() throws Exception {
 
         double ranking = controller.getRanking();
 
@@ -42,8 +44,9 @@ public class PlayerRestController {
 
     }
 
+
     @GetMapping(value = "/players/ranking/winner", produces = "application/json;charset=UTF-8")
-    public String playerRankingWinner() throws Exception {
+    public String getRankingWinner() throws Exception {
 
         PlayerDTO winner = controller.getRankingWinner();
 
@@ -51,8 +54,9 @@ public class PlayerRestController {
 
     }
 
+
     @GetMapping(value = "/players/ranking/loser", produces = "application/json;charset=UTF-8")
-    public String playerRankingLoser() throws Exception {
+    public String getRankingLoser() throws Exception {
 
         PlayerDTO loser = controller.getRankingLoser();
 

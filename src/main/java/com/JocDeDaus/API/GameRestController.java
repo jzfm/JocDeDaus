@@ -15,16 +15,19 @@ public class GameRestController {
     @Autowired
     GameController controller;
 
-    @PostMapping(value = "/players/{playerId}/{diceNumber}/games", produces = "application/json;charset=UTF-8")
-    public String playerPlays(@PathVariable int playerId, @PathVariable int diceNumber) throws Exception {
+    @PostMapping(value = "/players/{playerId}/games", produces = "application/json;charset=UTF-8")
+    public String playerPlays(@PathVariable int playerId, @RequestBody String diceNumber) throws Exception {
 
-        GameDTO newGame = controller.createGame(playerId, diceNumber);
+        Integer numberPlayerSelect = new Gson().fromJson(diceNumber, Integer.class);
+
+        GameDTO newGame = controller.createGame(playerId, numberPlayerSelect);
 
         return toJson(newGame);
     }
 
+
     @GetMapping(value = "/players/{playerId}/games", produces = "application/json;charset=UTF-8")
-    public String playerGamesList(@PathVariable int playerId) throws Exception {
+    public String getPlayerGameList(@PathVariable int playerId) throws Exception {
 
         List<GameDTO> games = controller.getAllGamesByPlayerId(playerId);
 
@@ -38,7 +41,7 @@ public class GameRestController {
     }
 
     @DeleteMapping(value = "players/{playerId}/games", produces = "application/json;charset=UTF-8")
-    public void deleteAllPLayerThrows(@PathVariable int playerId) throws Exception {
+    public void deleteAllPlayerThrows(@PathVariable int playerId) throws Exception {
         controller.deleteAllGamesByPlayerId(playerId);
     }
 }

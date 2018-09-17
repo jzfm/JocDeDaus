@@ -11,6 +11,9 @@ public class Player {
     private String name;
     private List<Game> games;
     private double winRate;
+    private static final String ANONYMOUS="Anonimo";
+    //private static int GAMECOUNTER=0;
+    //private static int WINCOUNTER=0;
     private static int COUNTER=1;
 
     public Player(){}
@@ -18,15 +21,16 @@ public class Player {
     public Player(PlayerDTO player) throws Exception {
         if (player == null || player.getName() == null)
             throw new Exception();
-        if (player.getName().equals("") || player.getName().equalsIgnoreCase("Anonimo")) {
-            this.name = "Anonimo";
-        }else{
+        if (!player.getName().equals("") || !player.getName().equalsIgnoreCase(ANONYMOUS)) {
             this.name = player.getName();
+        }else{
+            this.name = ANONYMOUS;
         }
 
         this.id = COUNTER;
         this.games = new ArrayList<>();
         this.winRate = 0.00;
+
         ++COUNTER;
     }
 
