@@ -4,6 +4,7 @@ import com.JocDeDaus.Application.DTO.GameDTO;
 import com.JocDeDaus.Application.GameController;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,17 +15,17 @@ public class GameRestController {
 
     @Autowired
     GameController controller;
-/*
+
     @PostMapping(value = "/players/{playerId}/games", produces = "application/json;charset=UTF-8")
-    public String playerPlays(@PathVariable int playerId, @RequestBody String jDiceNumber) throws Exception {
+    public String playerPlays(@PathVariable int playerId, @RequestBody JSONObject json) throws Exception {
 
-        int diceNumberSelected;
+        int diceAmountSelected = (int)json.get("diceAmountSelected");
 
-        GameDTO newGame = controller.createGame(playerId, diceNumberSelected);
+        GameDTO newGame = controller.playerPlays(playerId, diceAmountSelected);
 
         return toJson(newGame);
     }
-*/
+
 
     @GetMapping(value = "/players/{playerId}/games", produces = "application/json;charset=UTF-8")
     public String getPlayerGameList(@PathVariable int playerId) throws Exception {

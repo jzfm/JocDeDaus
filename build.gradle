@@ -28,4 +28,5 @@ dependencies {
 	compile('org.springframework.boot:spring-boot-starter-data-rest')
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 	compile('com.google.code.gson:gson:2.6.2')
+	compile('com.googlecode.json-simple:json-simple:1.1')
 }

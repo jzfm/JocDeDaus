@@ -31,12 +31,19 @@ public class GameDTO {
         this.diceResultsExpose = game.getDiceResults().toString();
     }
 
-    public int getId() {
-        return id;
+    public List<Dice> getDiceList() {
+        return diceList;
     }
 
     public boolean isWin() {
         return win;
     }
 
+    public List<Integer> getDiceResults() {
+        return diceResults;
+    }
+
+    public String getDiceResultsExpose() {
+        return diceResultsExpose;
+    }
 }
