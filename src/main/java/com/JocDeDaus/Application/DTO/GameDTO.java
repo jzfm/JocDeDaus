@@ -14,15 +14,9 @@ public class GameDTO {
     private List<Dice> diceList;
     @Expose
     private boolean win;
-    private Player player;
     private List<Integer> diceResults;
     @Expose
-    private String playerName;
-    @Expose
     private String diceResultsExpose;
-    @Expose
-    private double winRate;
-
 
     public GameDTO(){}
 
@@ -33,11 +27,8 @@ public class GameDTO {
         this.id = game.getId();
         this.diceList = game.getDiceList();
         this.win = game.isWin();
-        this.player = game.getPlayer();
         this.diceResults = game.getDiceResults();
-        this.playerName = game.getPlayer().getName();
         this.diceResultsExpose = game.getDiceResults().toString();
-        this.winRate = player.getWinrate();
     }
 
     public int getId() {
@@ -48,9 +39,4 @@ public class GameDTO {
         return win;
     }
 
-    public Player getPlayer() {
-        return player;
-    }
-
-    public String getPlayerName() { return playerName; }
 }

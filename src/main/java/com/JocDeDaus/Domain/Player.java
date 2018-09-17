@@ -12,8 +12,6 @@ public class Player {
     private List<Game> games;
     private double winRate;
     private static final String ANONYMOUS="Anonimo";
-    //private static int GAMECOUNTER=0;
-    //private static int WINCOUNTER=0;
     private static int COUNTER=1;
 
     public Player(){}
@@ -21,7 +19,7 @@ public class Player {
     public Player(PlayerDTO player) throws Exception {
         if (player == null || player.getName() == null)
             throw new Exception();
-        if (!player.getName().equals("") || !player.getName().equalsIgnoreCase(ANONYMOUS)) {
+        if (!player.getName().equals("") && !player.getName().equalsIgnoreCase(ANONYMOUS)) {
             this.name = player.getName();
         }else{
             this.name = ANONYMOUS;
@@ -30,7 +28,6 @@ public class Player {
         this.id = COUNTER;
         this.games = new ArrayList<>();
         this.winRate = 0.00;
-
         ++COUNTER;
     }
 
@@ -46,17 +43,24 @@ public class Player {
         this.name = name;
     }
 
-    public List<Game> getGames() {
-        return games;
-    }
+    public List<Game> getGames() { return games; }
 
     public void setGames(List<Game> games) {
         this.games = games;
     }
 
-    public double getWinrate() { return winRate; }
+    public double getWinRate() { return winRate; }
 
-    public void setWinRate(double winRate) {
-        this.winRate = winRate;
+    public void setWinRate() {
+        int winCounter=0;
+        if (games.size() != 0) {
+            for (Game game : games) {
+                if (game.isWin())
+                    winCounter = winCounter + 1;
+            }
+            this.winRate = ((double)winCounter*100)/(double)games.size();
+        }else {
+            this.winRate = 0;
+        }
     }
 }

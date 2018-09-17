@@ -14,17 +14,17 @@ public class GameRestController {
 
     @Autowired
     GameController controller;
-
+/*
     @PostMapping(value = "/players/{playerId}/games", produces = "application/json;charset=UTF-8")
-    public String playerPlays(@PathVariable int playerId, @RequestBody String diceNumber) throws Exception {
+    public String playerPlays(@PathVariable int playerId, @RequestBody String jDiceNumber) throws Exception {
 
-        Integer numberPlayerSelect = new Gson().fromJson(diceNumber, Integer.class);
+        int diceNumberSelected;
 
-        GameDTO newGame = controller.createGame(playerId, numberPlayerSelect);
+        GameDTO newGame = controller.createGame(playerId, diceNumberSelected);
 
         return toJson(newGame);
     }
-
+*/
 
     @GetMapping(value = "/players/{playerId}/games", produces = "application/json;charset=UTF-8")
     public String getPlayerGameList(@PathVariable int playerId) throws Exception {

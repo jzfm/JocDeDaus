@@ -2,14 +2,11 @@ package com.JocDeDaus.Application;
 
 import com.JocDeDaus.Application.DTO.PlayerDTO;
 import com.JocDeDaus.Domain.Player;
-import com.JocDeDaus.Persistance.GameRepository;
 import com.JocDeDaus.Persistance.PlayerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
 @Controller
@@ -17,9 +14,6 @@ public class PlayerController {
 
     @Autowired
     private PlayerRepository playerRepository;
-
-    @Autowired
-    private GameRepository gameRepository;
 
     public PlayerDTO createPlayer(PlayerDTO playerDTO) throws Exception {
         Player player = new Player(playerDTO);
@@ -30,7 +24,6 @@ public class PlayerController {
     public List<PlayerDTO> getAllPlayers() throws Exception {
         List<PlayerDTO> playerDTOList = new ArrayList<>();
         for (Player player : playerRepository.getAllPlayers()) {
-            player.setWinRate(gameRepository.getPlayerWinRate(player.getId()));
             PlayerDTO playerDTO = new PlayerDTO(player);
             playerDTOList.add(playerDTO);
         }
@@ -40,7 +33,7 @@ public class PlayerController {
     public PlayerDTO getRankingWinner() throws Exception {
         Player player = playerRepository.getPlayerById(1);
         for (Player player1 : playerRepository.getAllPlayers()) {
-            if (player.getWinrate() < player1.getWinrate())
+            if (player.getWinRate() < player1.getWinRate())
                 player = player1;
         }
         return new PlayerDTO(player);
@@ -49,7 +42,7 @@ public class PlayerController {
     public PlayerDTO getRankingLoser() throws Exception {
         Player player = playerRepository.getPlayerById(1);
         for (Player player1 : playerRepository.getAllPlayers()) {
-            if (player.getWinrate() > player1.getWinrate())
+            if (player.getWinRate() > player1.getWinRate())
                 player = player1;
         }
         return new PlayerDTO(player);
@@ -58,7 +51,7 @@ public class PlayerController {
     public double getRanking(){
         double totalWinRate = 0;
         for (Player player : playerRepository.getAllPlayers()) {
-            totalWinRate = player.getWinrate()+totalWinRate;
+            totalWinRate = player.getWinRate()+totalWinRate;
         }
         return totalWinRate/playerRepository.getAllPlayers().size();
     }
@@ -75,6 +68,5 @@ public class PlayerController {
 
     public void deletePlayer(int playerId) throws Exception {
         playerRepository.deletePlayerById(playerId);
-        //return new PlayerDTO(playerRepository.getPlayerById(playerId));
     }
 }

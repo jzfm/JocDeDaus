@@ -1,5 +1,6 @@
 package com.JocDeDaus.Persistance;
 
+import com.JocDeDaus.Domain.Game;
 import com.JocDeDaus.Domain.Player;
 import org.springframework.stereotype.Repository;
 
@@ -58,5 +59,26 @@ public class PlayerRepository {
 
     public void deletePlayerById(int id) throws Exception {
         players.remove(getPlayerById(id));
+    }
+
+    public void saveGame(Player player, Game game) throws Exception {
+        if (game == null)
+            throw new Exception();
+
+        player.getGames().add(game);
+    }
+
+    public List<Game> getAllGamesByPlayerId(int playerId) throws Exception {
+        if (playerId <= 0)
+            throw new Exception();
+
+        return getPlayerById(playerId).getGames();
+    }
+
+    public void deleteAllGamesByPlayerId(int playerId) throws Exception {
+        if (playerId <= 0)
+            throw new Exception();
+
+        getPlayerById(playerId).getGames().clear();
     }
 }

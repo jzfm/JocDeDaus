@@ -9,22 +9,17 @@ public class Game {
     private List<Dice> diceList = new ArrayList<>();
     private List<Integer> diceResults= new ArrayList<>();
     private boolean win;
-    private Player player;
     private static int COUNTER=1;
 
     public Game(){}
 
-    public Game(Player player, int diceNumber) throws Exception {
-        if (player == null || diceNumber <= 0)
-            throw new Exception();
-
+    public Game(int diceNumber) throws Exception {
         for(int i=0; i < diceNumber; ++i){
             diceList.add(new Dice());
         }
         for (Dice dice : diceList) {
             diceResults.add(dice.getResult());
         }
-        this.player = player;
         this.id = COUNTER;
         this.win = gameResult();
         ++COUNTER;
@@ -53,14 +48,6 @@ public class Game {
 
     public void setWin(boolean win) {
         this.win = win;
-    }
-
-    public Player getPlayer() {
-        return player;
-    }
-
-    public void setPlayer(Player player) {
-        this.player = player;
     }
 
     public List<Dice> getDiceList() {

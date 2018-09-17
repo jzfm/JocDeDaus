@@ -25,7 +25,7 @@ public class PlayerDTO {
         this.id = player.getId();
         this.name = player.getName();
         this.games = player.getGames();
-        this.winRate = player.getWinrate();
+        this.winRate = player.getWinRate();
     }
 
     public int getId() {
