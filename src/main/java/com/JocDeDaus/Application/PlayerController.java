@@ -1,6 +1,7 @@
 package com.JocDeDaus.Application;
 
 import com.JocDeDaus.Application.DTO.PlayerDTO;
+import com.JocDeDaus.Domain.Game;
 import com.JocDeDaus.Domain.Player;
 import com.JocDeDaus.Persistance.PlayerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,11 @@ public class PlayerController {
         Player player = new Player(playerDTO);
         playerRepository.savePlayer(player);
         return new PlayerDTO(player);
+    }
+
+    public void addGame(Player player, Game game){
+        player.getGames().add(game);
+        player.setWinRate();
     }
 
     public List<PlayerDTO> getAllPlayers() throws Exception {

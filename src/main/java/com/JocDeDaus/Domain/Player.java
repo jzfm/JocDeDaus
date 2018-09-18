@@ -27,7 +27,7 @@ public class Player {
 
         this.id = COUNTER;
         this.games = new ArrayList<>();
-        this.winRate = 0.00;
+        this.winRate = 0;
         ++COUNTER;
     }
 
@@ -51,16 +51,16 @@ public class Player {
 
     public double getWinRate() { return winRate; }
 
-    public void setWinRate() {
+    public double setWinRate() {
         int winCounter=0;
-        if (games.size() != 0) {
+        if (!games.isEmpty()) {
             for (Game game : games) {
                 if (game.isWin())
                     winCounter = winCounter + 1;
             }
-            this.winRate = ((double)winCounter*100)/(double)games.size();
+            return winRate = ((double)winCounter*100)/(double)games.size();
         }else {
-            this.winRate = 0;
+            return winRate = 0;
         }
     }
 }

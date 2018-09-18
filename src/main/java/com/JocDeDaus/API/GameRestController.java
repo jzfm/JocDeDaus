@@ -7,6 +7,7 @@ import com.google.gson.GsonBuilder;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import com.google.gson.JsonSyntaxException;
 
 import java.util.List;
 
@@ -17,11 +18,11 @@ public class GameRestController {
     GameController controller;
 
     @PostMapping(value = "/players/{playerId}/games", produces = "application/json;charset=UTF-8")
-    public String playerPlays(@PathVariable int playerId, @RequestBody JSONObject json) throws Exception {
+    public String playerPlays(@PathVariable int playerId, @RequestBody JSONObject json) throws Exception, JsonSyntaxException {
 
-        int diceAmountSelected = (int)json.get("diceAmountSelected");
+        int diceNumber = (int)json.get("diceNumber");
 
-        GameDTO newGame = controller.playerPlays(playerId, diceAmountSelected);
+        GameDTO newGame = controller.createGame(playerId, diceNumber);
 
         return toJson(newGame);
     }

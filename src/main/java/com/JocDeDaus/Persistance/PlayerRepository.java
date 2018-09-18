@@ -47,7 +47,7 @@ public class PlayerRepository {
         return false;
     }
 
-    public boolean playerExistById(int id) throws Exception {
+    private boolean playerExistById(int id) throws Exception {
         if (id <= 0)
             throw new Exception();
         for (Player player : players) {
@@ -59,26 +59,5 @@ public class PlayerRepository {
 
     public void deletePlayerById(int id) throws Exception {
         players.remove(getPlayerById(id));
-    }
-
-    public void saveGame(Player player, Game game) throws Exception {
-        if (game == null)
-            throw new Exception();
-
-        player.getGames().add(game);
-    }
-
-    public List<Game> getAllGamesByPlayerId(int playerId) throws Exception {
-        if (playerId <= 0)
-            throw new Exception();
-
-        return getPlayerById(playerId).getGames();
-    }
-
-    public void deleteAllGamesByPlayerId(int playerId) throws Exception {
-        if (playerId <= 0)
-            throw new Exception();
-
-        getPlayerById(playerId).getGames().clear();
     }
 }

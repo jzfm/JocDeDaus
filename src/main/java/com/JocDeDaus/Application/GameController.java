@@ -16,9 +16,13 @@ public class GameController {
     @Autowired
     PlayerRepository playerRepository;
 
-    private GameDTO createGame(Player player, int diceNumber) throws Exception {
+    @Autowired
+    PlayerController playerController;
+
+    public GameDTO createGame(int playerId, int diceNumber) throws Exception {
+        Player player = playerRepository.getPlayerById(playerId);
         Game game = new Game(diceNumber);
-        playerRepository.saveGame(player, game);
+        playerController.addGame(player, game);
         return new GameDTO(game);
     }
 
@@ -32,16 +36,9 @@ public class GameController {
         return gameDTOList;
     }
 
-    public GameDTO playerPlays(int playerId, int diceNumber) throws Exception {
-        Player player = playerRepository.getPlayerById(playerId);
-        GameDTO game = createGame(player, diceNumber);
-        player.setWinRate();
-        return game;
-    }
-
     public void deleteAllGamesByPlayerId(int playerId) throws Exception {
         Player player = playerRepository.getPlayerById(playerId);
-        playerRepository.deleteAllGamesByPlayerId(playerId);
+        player.getGames().clear();
         player.setWinRate();
     }
 }
